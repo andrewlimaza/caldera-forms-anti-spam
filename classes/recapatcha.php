@@ -36,7 +36,6 @@ class CF_Antispam_Recapatcha {
 		);
 
 		if(  is_ssl() ) {
-			var_dump( $fields );
 			$fields ['recaptcha' ][ 'scripts' ][] = 'https://www.google.com/recaptcha/api.js?onload=cf_recaptcha_is_ready&render=explicit';
 		}else{
 			$fields ['recaptcha' ][ 'scripts' ][] = 'http://www.google.com/recaptcha/api.js?onload=cf_recaptcha_is_ready&render=explicit';
