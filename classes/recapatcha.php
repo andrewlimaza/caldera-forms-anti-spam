@@ -28,7 +28,7 @@ class CF_Antispam_Recapatcha {
 			"preview"       => CF_ANTISPAM_PATH . "fields/recaptcha/preview.php",
 			"not_supported" => array(
 				'caption',
-				'required'
+			'required'
 				),
 			),
 			"scripts" => array()
@@ -36,9 +36,10 @@ class CF_Antispam_Recapatcha {
 		);
 
 		if(  is_ssl() ) {
-			$fields ['recaptcha' ][ 'scripts' ][] = 'https://www.google.com/recaptcha/api.js?render=explicit';
+			var_dump( $fields );
+			$fields ['recaptcha' ][ 'scripts' ][] = 'https://www.google.com/recaptcha/api.js?onload=cf_recaptcha_is_ready&render=explicit';
 		}else{
-			$fields ['recaptcha' ][ 'scripts' ][] = 'http://www.google.com/recaptcha/api.js?render=explicit';
+			$fields ['recaptcha' ][ 'scripts' ][] = 'http://www.google.com/recaptcha/api.js?onload=cf_recaptcha_is_ready&render=explicit';
 		}
 
 		return $fields;

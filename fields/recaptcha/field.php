@@ -27,19 +27,27 @@
 ?>
 	
 	<script>
-		jQuery( function($){
-			function init_recaptcha_<?php echo $field_id; ?>(){
-				var captch = $('#cap<?php echo $field_id; ?>');
 
-				captch.empty();
-				grecaptcha.render( captch[0], { "sitekey" : "<?php echo trim( $field['config']['public_key'] ); ?>", "theme" : "<?php echo isset( $field['config']['theme'] ) ? $field['config']['theme'] : "light"; ?>" } );
-			}			
-			jQuery(document).on('click', '.reset_<?php echo $field_id; ?>', function(e){
-				e.preventDefault();
+		var cf_recaptcha_is_ready = function (){
+			jQuery(document).trigger("cf-anti-init-recaptcha");
+		}
+
+		jQuery( function($){
+
+			jQuery(document).on("cf-anti-init-recaptcha", function(){
+				function init_recaptcha_<?php echo $field_id; ?>(){
+					var captch = $('#cap<?php echo $field_id; ?>');
+
+					captch.empty();
+					grecaptcha.render( captch[0], { "sitekey" : "<?php echo trim( $field['config']['public_key'] ); ?>", "theme" : "<?php echo isset( $field['config']['theme'] ) ? $field['config']['theme'] : "light"; ?>" } );
+				}			
+				jQuery(document).on('click', '.reset_<?php echo $field_id; ?>', function(e){
+					e.preventDefault();
+					init_recaptcha_<?php echo $field_id; ?>();
+				});
+
 				init_recaptcha_<?php echo $field_id; ?>();
 			});
-
-			init_recaptcha_<?php echo $field_id; ?>();
 		});
 
 	</script>
