@@ -24,11 +24,11 @@ class CF_Antispam_Recapatcha {
 			"handler"     => array( $this, 'handler' ),
 			"capture"     => false,
 			"setup"       => array(
-				"template"      => CF_ANTISPAM_PATH . "fields/recaptcha/config.php",
-				"preview"       => CF_ANTISPAM_PATH . "fields/recaptcha/preview.php",
-				"not_supported" => array(
-					'caption',
-					'required'
+			"template"      => CF_ANTISPAM_PATH . "fields/recaptcha/config.php",
+			"preview"       => CF_ANTISPAM_PATH . "fields/recaptcha/preview.php",
+			"not_supported" => array(
+				'caption',
+				'required'
 				),
 			),
 			"scripts" => array()
@@ -36,9 +36,9 @@ class CF_Antispam_Recapatcha {
 		);
 
 		if(  is_ssl() ) {
-			$fields ['recaptcha' ][ 'scripts' ][] = 'https://www.google.com/recaptcha/api.js';
+			$fields ['recaptcha' ][ 'scripts' ][] = 'https://www.google.com/recaptcha/api.js?render=explicit';
 		}else{
-			$fields ['recaptcha' ][ 'scripts' ][] = 'http://www.google.com/recaptcha/api.js';
+			$fields ['recaptcha' ][ 'scripts' ][] = 'http://www.google.com/recaptcha/api.js?render=explicit';
 		}
 
 		return $fields;
