@@ -16,6 +16,7 @@ class CF_Antispam_Recapatcha {
 	 * @return array
 	 */
 	public function add_field( $fields ){
+                $language = get_locale();
 		$fields[ 'recaptcha'  ]      = array(
 			"field"       => __( 'reCAPTCHA', 'caldera-forms-anti-spam' ),
 			"description" => __( 'reCAPTCHA anti-spam field', 'caldera-forms-anti-spam' ),
@@ -36,9 +37,9 @@ class CF_Antispam_Recapatcha {
 		);
 
 		if(  is_ssl() ) {
-			$fields ['recaptcha' ][ 'scripts' ][] = 'https://www.google.com/recaptcha/api.js?onload=cf_recaptcha_is_ready&render=explicit';
+			$fields ['recaptcha' ][ 'scripts' ][] = 'https://www.google.com/recaptcha/api.js?onload=cf_recaptcha_is_ready&render=explicit&hl=' . $language;
 		}else{
-			$fields ['recaptcha' ][ 'scripts' ][] = 'http://www.google.com/recaptcha/api.js?onload=cf_recaptcha_is_ready&render=explicit';
+			$fields ['recaptcha' ][ 'scripts' ][] = 'http://www.google.com/recaptcha/api.js?onload=cf_recaptcha_is_ready&render=explicit&hl=' . $language;
 		}
 
 		return $fields;
