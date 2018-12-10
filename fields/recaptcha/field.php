@@ -15,7 +15,7 @@
 
 <?php echo Caldera_Forms_Field_Input::html( $field, $field_structure, $form ); ?>
 
-<div id="cap<?php echo $field_id; ?>" class="g-recaptcha" data-sitekey="<?php echo $field['config']['public_key']; ?>"></div>
+<div id="cap<?php echo $field_id; ?>" class="g-recaptcha" data-sitekey="<?php echo $field['config']['public_key']; ?>" <?php if ( $field['config']['invis'] === 1 ) { ?>data-size="invisible" <?php } ?>></div>
 
 <?php echo $field_caption; ?>
 
@@ -39,7 +39,12 @@
 					var captch = $('#cap<?php echo $field_id; ?>');
 
 					captch.empty();
+					
+
 					grecaptcha.render( captch[0], { "sitekey" : "<?php echo trim( $field['config']['public_key'] ); ?>", "theme" : "<?php echo isset( $field['config']['theme'] ) ? $field['config']['theme'] : "light"; ?>" } );
+
+					// Only load grecaptcha.execute if it's set to invisible mode.
+					<?php if ( $field['config']['invis'] === 1 ) { ?> grecaptcha.execute(); <?php } ?>
 				}			
 				jQuery(document).on('click', '.reset_<?php echo $field_id; ?>', function(e){
 					e.preventDefault();
