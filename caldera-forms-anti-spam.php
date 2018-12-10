@@ -1,16 +1,16 @@
 <?php
 /**
-Plugin Name: Caldera Forms Anti Spam
-Description: Anti-spam for Caldera Forms. Recaptcha field!
-Author: YooHoo Plugins
-Version: 0.1.0
-Author URI: https://yoohooplugins.com
-Text Domain: caldera-forms-anti-spam
+* Plugin Name: Caldera Forms Anti Spam
+* Description: Anti-spam for Caldera Forms. Recaptcha field!
+* Author: YooHoo Plugins
+* Version: 0.1.1
+* Author URI: https://yoohooplugins.com
+* Text Domain: caldera-forms-anti-spam
  */
 
 define( 'CF_ANTISPAM_PATH',  plugin_dir_path( __FILE__ ) );
 define( 'CF_ANTISPAM_URL',  plugin_dir_url( __FILE__ ) );
-define( 'CF_ANTISPAM_VER', '1.4.1' );
+define( 'CF_ANTISPAM_VER', '0.1.1' );
 
 
 

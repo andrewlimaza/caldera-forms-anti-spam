@@ -1,9 +1,9 @@
 === Caldera Forms Anti Spam ===
-Contributors: andrewza
+Contributors: andrewza, yoohooplugins, travislima
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4GC4JEZH7KSKL		
 Tags: caldera forms, anti-spam, recapatcha
 Requires at least: 4.7
-Tested up to: 4.8.1
+Tested up to: 4.8.3
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
