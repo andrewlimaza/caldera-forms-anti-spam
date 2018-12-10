@@ -3,7 +3,7 @@ Contributors: andrewza, yoohooplugins, travislima
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4GC4JEZH7KSKL		
 Tags: caldera forms, anti-spam, recapatcha
 Requires at least: 4.7
-Tested up to: 4.8.3
+Tested up to: 5.0
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -42,10 +42,16 @@ Yes, this will add a Google reCaptcha-powered captcha to your Caldera Form.
 
 == Changelog ==
 
+= 0.1.1 =
+* Allow more than one recaptcha per page.
+
 = 0.1.0 =
 * First release
 
 == Upgrade Notice ==
 
+= 0.1.1 =
+* Please upgrade for enhancements.
+
 = 0.1.0 =
-First Release
+*First Release

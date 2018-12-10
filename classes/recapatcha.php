@@ -1,9 +1,5 @@
 <?php
-
-
 class CF_Antispam_Recapatcha {
-
-
 	/**
 	 * Overwrite old field in Caldera Forms
 	 *
@@ -16,7 +12,9 @@ class CF_Antispam_Recapatcha {
 	 * @return array
 	 */
 	public function add_field( $fields ){
-                $language = get_locale();
+
+        $language = get_locale();
+
 		$fields[ 'recaptcha'  ]      = array(
 			"field"       => __( 'reCAPTCHA', 'caldera-forms-anti-spam' ),
 			"description" => __( 'reCAPTCHA anti-spam field', 'caldera-forms-anti-spam' ),
@@ -32,20 +30,11 @@ class CF_Antispam_Recapatcha {
 			'required'
 				),
 			),
-			"scripts" => array()
-
+			"scripts" => array( 'https://www.google.com/recaptcha/api.js?onload=cf_recaptcha_is_ready&render=explicit&hl=' . $language )
 		);
-
-		if(  is_ssl() ) {
-			$fields ['recaptcha' ][ 'scripts' ][] = 'https://www.google.com/recaptcha/api.js?onload=cf_recaptcha_is_ready&render=explicit&hl=' . $language;
-		}else{
-			$fields ['recaptcha' ][ 'scripts' ][] = 'http://www.google.com/recaptcha/api.js?onload=cf_recaptcha_is_ready&render=explicit&hl=' . $language;
-		}
-
+		
 		return $fields;
-
 	}
-
 	/**
 	 * Modify field attributes so recpatcha field has type "hidden" not "recpatcha"
 	 *
@@ -62,7 +51,6 @@ class CF_Antispam_Recapatcha {
 		$attrs[ 'type' ] = 'hidden';
 		return $attrs;
 	}
-
 	/**
 	 * Check that the recaptcha response is sent on forms that have a recapthca field.
 	 *
@@ -80,10 +68,8 @@ class CF_Antispam_Recapatcha {
 		if ( ! isset( $_POST[ 'g-recaptcha-response' ] ) || empty( $_POST[ 'g-recaptcha-response' ] ) ) {
 			return new WP_Error( 'error' );
 		}
-
 		return true;
 	}
-
 	/**
 	 * Field handler -- checks for recaptcha and verifies  it if possible
 	 *
@@ -99,12 +85,10 @@ class CF_Antispam_Recapatcha {
 		if ( ! isset( $_POST[ 'g-recaptcha-response' ] ) || empty( $_POST[ 'g-recaptcha-response' ] ) ) {
 			return new WP_Error( 'error' );
 		}
-
 		$args = array(
 			'secret'   => $field[ 'config' ][ 'private_key' ],
 			'response' => sanitize_text_field( $_POST[ 'g-recaptcha-response' ] )
 		);
-
 		$request = wp_remote_get( add_query_arg( $args, 'https://www.google.com/recaptcha/api/siteverify' ) );
 		$result  = json_decode( wp_remote_retrieve_body( $request ) );
 		if ( empty( $result->success ) ) {
@@ -112,9 +96,6 @@ class CF_Antispam_Recapatcha {
 				__( "The captcha wasn't entered correctly.", 'caldera-forms-anti-spam' ) . ' <a href="#" class="reset_' . sanitize_text_field( $_POST[ $field[ 'ID' ] ] ) . '">' . __( 'Reset', 'caldera-forms-anti-spam' ) . '<a>.'
 			);
 		}
-
 		return true;
-
 	}
-
 }
