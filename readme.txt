@@ -1,14 +1,14 @@
 === Caldera Forms Anti Spam ===
 Contributors: andrewza, yoohooplugins, travislima
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4GC4JEZH7KSKL
-Tags: caldera forms, anti-spam, recapatcha
+Tags: caldera forms, anti-spam, recaptcha
 Requires at least: 4.5
 Tested up to: 5.2.2
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Anti-spam for Caldera Forms. Recaptcha and more.
+Anti-spam for Caldera Forms. reCAPTCHA and more.
 == Description ==
 
 Anti-spam for [Caldera Forms](https://calderaforms.com)
