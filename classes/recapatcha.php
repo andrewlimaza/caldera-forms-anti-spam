@@ -13,13 +13,11 @@ class CF_Antispam_Recapatcha {
 	 */
 	public function add_field( $fields ){
 
-        $language = get_locale();
-
 		$fields[ 'recaptcha'  ]      = array(
-			"field"       => __( 'reCAPTCHA', 'caldera-forms-anti-spam' ),
-			"description" => __( 'reCAPTCHA anti-spam field', 'caldera-forms-anti-spam' ),
+			"field"       => __( 'reCAPTCHA', 'cf-anti-spam' ),
+			"description" => __( 'reCAPTCHA anti-spam field', 'cf-anti-spam' ),
 			"file"        => CF_ANTISPAM_PATH . "fields/recaptcha/field.php",
-			"category"    => __( 'Special', 'caldera-forms' ),
+			"category"    => __( 'Special', 'cf-anti-spam' ),
 			"handler"     => array( $this, 'handler' ),
 			"capture"     => false,
 			"setup"       => array(
@@ -30,11 +28,37 @@ class CF_Antispam_Recapatcha {
 			'required'
 				),
 			),
-			"scripts" => array( 'https://www.google.com/recaptcha/api.js?onload=cf_recaptcha_is_ready&render=explicit&hl=' . $language )
+			/*"scripts" => array( 'https://www.google.com/recaptcha/api.js?onload=cf_recaptcha_is_ready&render=explicit&hl=' . $language )*/
 		);
-		
+
 		return $fields;
 	}
+
+	/**
+	 * Remove the recaptcha field type from the summary email using the caldera hook
+	 *
+	 * @since 0.2
+	 *
+	 * @uses "caldera_forms_summary_magic_fields" filter
+	 *
+	 * @param array $fields Fields in form submission
+	 * @param object $form Form object from caldera
+	 *
+	 * @return array
+	 */
+	public function remove_from_summary( $fields, $form ){
+		if(!empty($fields)){
+			foreach($fields as $field_id => $field){
+				$type = Caldera_Forms_Field_Util::get_type($field, $form);
+				if($type === 'recaptcha'){
+					unset($fields[$field_id]);
+				}
+			}
+		}
+
+		return $fields;
+	}
+
 	/**
 	 * Modify field attributes so recpatcha field has type "hidden" not "recpatcha"
 	 *
@@ -82,6 +106,16 @@ class CF_Antispam_Recapatcha {
 	 * @return WP_Error|boolean
 	 */
 	public function handler( $value, $field, $form ){
+
+		/**
+		 * Check if this is V3, then we grab the dynamically generated field value
+		*/
+		if (!empty($field['config']['recapv']) && $field['config']['recapv'] === 1 ) {
+			if(!empty($_POST['cf-recapv-token'])){
+				$_POST[ 'g-recaptcha-response' ] = $_POST['cf-recapv-token'];
+			}
+		}
+
 		if ( ! isset( $_POST[ 'g-recaptcha-response' ] ) || empty( $_POST[ 'g-recaptcha-response' ] ) ) {
 			return new WP_Error( 'error' );
 		}
@@ -93,7 +127,7 @@ class CF_Antispam_Recapatcha {
 		$result  = json_decode( wp_remote_retrieve_body( $request ) );
 		if ( empty( $result->success ) ) {
 			return new WP_Error( 'error',
-				__( "The captcha wasn't entered correctly.", 'caldera-forms-anti-spam' ) . ' <a href="#" class="reset_' . sanitize_text_field( $_POST[ $field[ 'ID' ] ] ) . '">' . __( 'Reset', 'caldera-forms-anti-spam' ) . '<a>.'
+				__( "The captcha wasn't entered correctly.", 'cf-anti-spam' ) . ' <a href="#" class="reset_' . sanitize_text_field( $_POST[ $field[ 'ID' ] ] ) . '">' . __( 'Reset', 'cf-anti-spam' ) . '<a>.'
 			);
 		}
 		return true;

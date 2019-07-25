@@ -31,6 +31,7 @@ function cf_antispam_init_recpatcha(){
 	//Prevent removing recaptcha from DOM from being effective bypass of recpatcha
 	add_filter( 'caldera_forms_validate_field_recaptcha', array( $recaptcha, 'check_for_captcha' ), 10, 3 );
 
-
 	add_filter( 'caldera_forms_field_attributes-recaptcha', array( $recaptcha, 'field_attrs' ), 10, 2 );
+
+    add_filter( 'caldera_forms_summary_magic_fields', array( $recaptcha, 'remove_from_summary' ), 10, 2 );
 }
