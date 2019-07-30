@@ -10,7 +10,7 @@
 
 define( 'CF_ANTISPAM_PATH',  plugin_dir_path( __FILE__ ) );
 define( 'CF_ANTISPAM_URL',  plugin_dir_url( __FILE__ ) );
-define( 'CF_ANTISPAM_VER', '0.1.1' );
+define( 'CF_ANTISPAM_VER', '0.2' );
 
 
 

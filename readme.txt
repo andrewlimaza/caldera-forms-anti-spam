@@ -40,7 +40,7 @@ Yes, this will add a Google reCAPTCHA-powered captcha to your Caldera Form.
 Yes, this supports 'legacy' versions of reCaptcha for Caldera Forms.
 
 = How Do I Enable V2 reCAPTCHA =
-Add the hidden field to your Caldera Form and do not select V3 or Invisible reCaptcha Checkboxes.
+Add the hidden field to your Caldera Form and do not select V3 or Invisible reCAPTCHA checkboxes.
 
 = How Do I Enable V3 reCAPTCHA =
 Once the hidden field is added to your Caldera Form, select the V3 checkbox. (You do not need to select the Invisible reCaptcha option if you have selected this setting).
