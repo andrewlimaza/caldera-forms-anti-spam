@@ -31,11 +31,22 @@ if (!empty($field['config']['recapv']) && $field['config']['recapv'] === 1 ) {
 <div id="cap<?php echo $field_id; ?>" class="g-recaptcha" data-sitekey="<?php echo $field['config']['public_key']; ?>" <?php if (!empty($field['config']['invis']) && $field['config']['invis'] === 1 ) { ?>data-size="invisible" <?php } ?>></div>
 
 <script>
-	if(!window.cf_anti_loading_recaptcha) {
-		window.cf_anti_loading_recaptcha = true;
-		jQuery('.cf_anti_capfld').html('');
-		jQuery('script[src="<?php echo $script_url ?>"]').remove();
-		jQuery('<script>').attr('src', "<?php echo $script_url ?>").appendTo('body');
+	if(!window.cf_anti_recaptcha_load) {
+		jQuery(document).on("cf-anti-init-recaptcha", function(){
+			jQuery(document).on('click', '.reset_<?php echo $field_id; ?>', function(e){
+				e.preventDefault();
+				cf_init_recaptcha_<?php echo $field_id; ?>();
+			});
+			cf_init_recaptcha_<?php echo $field_id; ?>();
+		});
+		if(!window.cf_anti_recaptcha_loading) {
+			jQuery('<script>').attr('src', "<?php echo $script_url ?>").appendTo('body');
+			window.cf_anti_recaptcha_loading = true;
+		}
+	}
+	else {
+		jQuery('#cap<?php echo $field_id; ?>').html('');
+		cf_init_recaptcha_<?php echo $field_id; ?>();
 	}
 </script>
 
@@ -51,21 +62,19 @@ if (!empty($field['config']['recapv']) && $field['config']['recapv'] === 1 ) {
 	<script>
 
 		var cf_recaptcha_is_ready = function (){
-			window.cf_anti_loading_recaptcha = false;
+			window.cf_anti_recaptcha_loading = false;
+			window.cf_anti_recaptcha_load = true;
 			jQuery(document).trigger("cf-anti-init-recaptcha");
 		}
 
-		jQuery( function($){
+var cf_init_recaptcha_<?php echo $field_id; ?> = function() {
 
-			jQuery(document).on("cf-anti-init-recaptcha", function(){
-				function init_recaptcha_<?php echo $field_id; ?>(){
-
-					var captch = $('#cap<?php echo $field_id; ?>').addClass('cf_anti_capfld');
+					var captch = jQuery('#cap<?php echo $field_id; ?>');
 					<?php if (!empty($field['config']['recapv']) && $field['config']['recapv'] === 1 ) { ?>
 						grecaptcha.ready(function() {
-							var captch = $('#cap<?php echo $field_id; ?>');
+						var captch = jQuery('#cap<?php echo $field_id; ?>');
 					      	grecaptcha.execute("<?php echo trim( $field['config']['public_key'] ); ?>", {action: 'homepage'}).then(function(token) {
-					          $('<input type="hidden" name="cf-recapv-token" value="' + token + '">').insertAfter(captch[0]);
+					          jQuery('<input type="hidden" name="cf-recapv-token" value="' + token + '">').insertAfter(captch[0]);
 					      	});;
 					  	});
 					<?php } else { ?>
@@ -79,15 +88,6 @@ if (!empty($field['config']['recapv']) && $field['config']['recapv'] === 1 ) {
 						<?php if ( !empty( $field['config']['invis']) && $field['config']['invis'] === 1 ) { ?> grecaptcha.execute(); <?php } ?>
 					<?php } ?>
 				}
-
-				jQuery(document).on('click', '.reset_<?php echo $field_id; ?>', function(e){
-					e.preventDefault();
-					init_recaptcha_<?php echo $field_id; ?>();
-				});
-
-				init_recaptcha_<?php echo $field_id; ?>();
-			});
-		});
 
 	</script>
 
