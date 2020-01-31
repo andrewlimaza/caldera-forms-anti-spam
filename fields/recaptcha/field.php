@@ -30,25 +30,7 @@ if (!empty($field['config']['recapv']) && $field['config']['recapv'] === 1 ) {
 
 <div id="cap<?php echo $field_id; ?>" class="g-recaptcha" data-sitekey="<?php echo $field['config']['public_key']; ?>" <?php if (!empty($field['config']['invis']) && $field['config']['invis'] === 1 ) { ?>data-size="invisible" <?php } ?>></div>
 
-<script>
-	if(!window.cf_anti_recaptcha_load) {
-		jQuery(document).on("cf-anti-init-recaptcha", function(){
-			jQuery(document).on('click', '.reset_<?php echo $field_id; ?>', function(e){
-				e.preventDefault();
-				cf_init_recaptcha_<?php echo $field_id; ?>();
-			});
-			cf_init_recaptcha_<?php echo $field_id; ?>();
-		});
-		if(!window.cf_anti_recaptcha_loading) {
-			jQuery('<script>').attr('src', "<?php echo $script_url ?>").appendTo('body');
-			window.cf_anti_recaptcha_loading = true;
-		}
-	}
-	else {
-		jQuery('#cap<?php echo $field_id; ?>').html('');
-		cf_init_recaptcha_<?php echo $field_id; ?>();
-	}
-</script>
+<img onload="cf_load_recaptcha_<?php echo $field_id; ?>()" style="position:fixed;top:0;left:0;" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" />
 
 <?php echo $field_caption; ?>
 
@@ -66,6 +48,26 @@ if (!empty($field['config']['recapv']) && $field['config']['recapv'] === 1 ) {
 			window.cf_anti_recaptcha_load = true;
 			jQuery(document).trigger("cf-anti-init-recaptcha");
 		}
+
+var cf_load_recaptcha_<?php echo $field_id; ?> = function() {
+	if(!window.cf_anti_recaptcha_load) {
+		jQuery(document).on("cf-anti-init-recaptcha", function(){
+			jQuery(document).on('click', '.reset_<?php echo $field_id; ?>', function(e){
+				e.preventDefault();
+				cf_init_recaptcha_<?php echo $field_id; ?>();
+			});
+			cf_init_recaptcha_<?php echo $field_id; ?>();
+		});
+		if(!window.cf_anti_recaptcha_loading) {
+			jQuery('<script>').attr('src', "<?php echo $script_url ?>").appendTo('body');
+			window.cf_anti_recaptcha_loading = true;
+		}
+	}
+	else {
+		jQuery('#cap<?php echo $field_id; ?>').html('');
+		cf_init_recaptcha_<?php echo $field_id; ?>();
+	}
+}
 
 var cf_init_recaptcha_<?php echo $field_id; ?> = function() {
 
