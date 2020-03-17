@@ -29,7 +29,11 @@ wp_enqueue_script('cf-anti-spam-recapthca-lib', $script_url);
 
 <?php echo Caldera_Forms_Field_Input::html( $field, $field_structure, $form ); ?>
 
-<div id="cap<?php echo $field_id; ?>" class="g-recaptcha" data-sitekey="<?php echo $field['config']['public_key']; ?>" <?php if (!empty($field['config']['invis']) && $field['config']['invis'] === 1 ) { ?>data-size="invisible" <?php } ?>></div>
+<?php if (!empty($field['config']['recapv']) && $field['config']['recapv'] === 1 ) { ?>
+	<div id="cap<?php echo $field_id; ?>"></div>
+<?php } else { ?>
+	<div id="cap<?php echo $field_id; ?>" class="g-recaptcha" data-sitekey="<?php echo $field['config']['public_key']; ?>" <?php if (!empty($field['config']['invis']) && $field['config']['invis'] === 1 ) { ?>data-size="invisible" <?php } ?>></div>
+<?php } ?>
 
 <?php echo $field_caption; ?>
 
@@ -57,7 +61,7 @@ wp_enqueue_script('cf-anti-spam-recapthca-lib', $script_url);
 							var captch = $('#cap<?php echo $field_id; ?>');
 					      	grecaptcha.execute("<?php echo trim( $field['config']['public_key'] ); ?>", {action: 'homepage'}).then(function(token) {
 					          $('<input type="hidden" name="cf-recapv-token" value="' + token + '">').insertAfter(captch[0]);
-					      	});;
+					      	});
 					  	});
 					<?php } else { ?>
 

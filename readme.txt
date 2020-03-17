@@ -1,14 +1,14 @@
 === Caldera Forms Anti Spam ===
 Contributors: andrewza, yoohooplugins, travislima
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4GC4JEZH7KSKL
-Tags: caldera forms, anti-spam, recapatcha
+Tags: caldera forms, anti-spam, recaptcha
 Requires at least: 4.5
-Tested up to: 5.2.2
+Tested up to: 5.3
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Anti-spam for Caldera Forms. Recaptcha and more.
+Anti-spam for Caldera Forms. reCAPTCHA and more.
 == Description ==
 
 Anti-spam for [Caldera Forms](https://calderaforms.com)
@@ -40,7 +40,7 @@ Yes, this will add a Google reCAPTCHA-powered captcha to your Caldera Form.
 Yes, this supports 'legacy' versions of reCaptcha for Caldera Forms.
 
 = How Do I Enable V2 reCAPTCHA =
-Add the hidden field to your Caldera Form and do not select V3 or Invisible reCaptcha Checkboxes.
+Add the hidden field to your Caldera Form and do not select V3 or Invisible reCAPTCHA checkboxes.
 
 = How Do I Enable V3 reCAPTCHA =
 Once the hidden field is added to your Caldera Form, select the V3 checkbox. (You do not need to select the Invisible reCaptcha option if you have selected this setting).
@@ -50,6 +50,10 @@ Once the hidden field is added to your Caldera Form, select the V3 checkbox. (Yo
 
 
 == Changelog ==
+
+= 0.3 =
+* Fixed JavaScript syntax issues within the V3 reCAPTCHA handler
+* Fixed bug where V2 reCAPTCHA field would still be rendered when V3 is enabled
 
 = 0.2 =
 * Added invisible reCAPTCHA support and option
