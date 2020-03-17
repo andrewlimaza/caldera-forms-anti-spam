@@ -3,8 +3,8 @@ Contributors: andrewza, yoohooplugins, travislima
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4GC4JEZH7KSKL
 Tags: caldera forms, anti-spam, recaptcha
 Requires at least: 4.5
-Tested up to: 5.3
-Stable tag: trunk
+Tested up to: 5.4
+Stable tag: 0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
