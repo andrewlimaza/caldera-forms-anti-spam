@@ -51,36 +51,40 @@ wp_enqueue_script('cf-anti-spam-recapthca-lib', $script_url);
 		}
 
 		jQuery( function($){
+            function init_recaptcha_<?php echo $field_id; ?>(){
+
+                var captch = $('#cap<?php echo $field_id; ?>');
+                <?php if (!empty($field['config']['recapv']) && $field['config']['recapv'] === 1 ) { ?>
+                grecaptcha.ready(function() {
+                    var captch = $('#cap<?php echo $field_id; ?>');
+                    grecaptcha.execute("<?php echo trim( $field['config']['public_key'] ); ?>", {action: 'homepage'}).then(function(token) {
+                        $('<input type="hidden" name="cf-recapv-token" value="' + token + '">').insertAfter(captch[0]);
+                    });
+                });
+                <?php } else { ?>
+
+                captch.empty();
+
+
+                grecaptcha.render( captch[0], { "sitekey" : "<?php echo trim( $field['config']['public_key'] ); ?>", "theme" : "<?php echo isset( $field['config']['theme'] ) ? $field['config']['theme'] : "light"; ?>" } );
+
+                // Only load grecaptcha.execute if it's set to invisible mode.
+                <?php if ( !empty( $field['config']['invis']) && $field['config']['invis'] === 1 ) { ?> grecaptcha.execute(); <?php } ?>
+                <?php } ?>
+            }
 
 			jQuery(document).on("cf-anti-init-recaptcha", function(){
-				function init_recaptcha_<?php echo $field_id; ?>(){
-
-					var captch = $('#cap<?php echo $field_id; ?>');
-					<?php if (!empty($field['config']['recapv']) && $field['config']['recapv'] === 1 ) { ?>
-						grecaptcha.ready(function() {
-							var captch = $('#cap<?php echo $field_id; ?>');
-					      	grecaptcha.execute("<?php echo trim( $field['config']['public_key'] ); ?>", {action: 'homepage'}).then(function(token) {
-					          $('<input type="hidden" name="cf-recapv-token" value="' + token + '">').insertAfter(captch[0]);
-					      	});
-					  	});
-					<?php } else { ?>
-
-						captch.empty();
-
-
-						grecaptcha.render( captch[0], { "sitekey" : "<?php echo trim( $field['config']['public_key'] ); ?>", "theme" : "<?php echo isset( $field['config']['theme'] ) ? $field['config']['theme'] : "light"; ?>" } );
-
-						// Only load grecaptcha.execute if it's set to invisible mode.
-						<?php if ( !empty( $field['config']['invis']) && $field['config']['invis'] === 1 ) { ?> grecaptcha.execute(); <?php } ?>
-					<?php } ?>
-				}
-
-				jQuery(document).on('click', '.reset_<?php echo $field_id; ?>', function(e){
-					e.preventDefault();
-					init_recaptcha_<?php echo $field_id; ?>();
-				});
-
 				init_recaptcha_<?php echo $field_id; ?>();
+
+                (function() {
+                    var request = XMLHttpRequest.prototype.open;
+                    XMLHttpRequest.prototype.open = function() {
+                        this.addEventListener('load', function() {
+                            grecaptcha.reset();
+                        });
+                        request.apply(this, arguments);
+                    };
+                })();
 			});
 		});
 
