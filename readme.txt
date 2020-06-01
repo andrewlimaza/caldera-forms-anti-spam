@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: caldera forms, anti-spam, recaptcha
 Requires at least: 4.5
 Tested up to: 5.4
-Stable tag: 0.2
+Stable tag: 0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,6 +50,14 @@ Once the hidden field is added to your Caldera Form, select the V3 checkbox. (Yo
 
 
 == Changelog ==
+
+= 0.4 =
+* Added form name as action for v3 submissions
+* Changed logic to make it clearer when using v2 or v3
+* Changed script execution to only happen at form submission (prevents timeout bug)
+* Changed script to inject at footer of page
+* Improved code structure to pass WordPress CodeSniffer rules (for field.php)
+* Removed older Caldera code they no longer have in mainline
 
 = 0.3 =
 * Fixed JavaScript syntax issues within the V3 reCAPTCHA handler
