@@ -3,14 +3,14 @@
 * Plugin Name: Caldera Forms Anti Spam
 * Description: Anti-spam for Caldera Forms. Recaptcha field!
 * Author: Yoohoo Plugins
-* Version: 0.3
+* Version: 0.4
 * Author URI: https://yoohooplugins.com
 * Text Domain: cf-anti-spam
  */
 
 define( 'CF_ANTISPAM_PATH',  plugin_dir_path( __FILE__ ) );
 define( 'CF_ANTISPAM_URL',  plugin_dir_url( __FILE__ ) );
-define( 'CF_ANTISPAM_VER', '0.3' );
+define( 'CF_ANTISPAM_VER', '0.4' );
 
 
 
