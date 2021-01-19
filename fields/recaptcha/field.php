@@ -80,6 +80,9 @@ wp_enqueue_script('cf-anti-spam-recapthca-lib', $script_url);
 					init_recaptcha_<?php echo $field_id; ?>();
 				});
 
+				//refresh it every 2 minutes.
+				setInterval(function () { init_recaptcha_<?php echo $field_id; ?>(); }, 2 * 60 * 1000);
+				
 				init_recaptcha_<?php echo $field_id; ?>();
 			});
 		});
