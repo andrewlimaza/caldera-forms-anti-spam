@@ -57,11 +57,12 @@ wp_enqueue_script('cf-anti-spam-recapthca-lib', $script_url);
 
 					var captch = $('#cap<?php echo $field_id; ?>');
 					<?php if (!empty($field['config']['recapv']) && $field['config']['recapv'] === 1 ) { ?>
+						$('<input type="hidden" name="cf-recapv-token" id="cf-recapv-token" value="ready">').insertAfter(captch[0]);
 						grecaptcha.ready(function() {
 							var captch = $('#cap<?php echo $field_id; ?>');
-					      	grecaptcha.execute("<?php echo trim( $field['config']['public_key'] ); ?>", {action: 'homepage'}).then(function(token) {
-					          $('<input type="hidden" name="cf-recapv-token" value="' + token + '">').insertAfter(captch[0]);
-					      	});
+					      	grecaptcha.execute("<?php echo trim( $field['config']['public_key'] ); ?>", {action: 'homepage'}).then(function(token) {								
+							//change token
+							if( token !== "" ){ $("#cf-recapv-token").val( token ); }
 					  	});
 					<?php } else { ?>
 
