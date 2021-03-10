@@ -21,7 +21,6 @@ $script_url = "https://www.google.com/recaptcha/api.js?onload=cf_recaptcha_is_re
 if (!empty($field['config']['recapv']) && $field['config']['recapv'] === 1 ) {
 	$script_url = "https://www.google.com/recaptcha/api.js?onload=cf_recaptcha_is_ready&render=" . trim($field['config']['public_key']) . "&hl=" . $language;
 }
-wp_enqueue_script('cf-anti-spam-recapthca-lib', $script_url);
 
 ?>
 
@@ -35,6 +34,15 @@ wp_enqueue_script('cf-anti-spam-recapthca-lib', $script_url);
 	<div id="cap<?php echo $field_id; ?>" class="g-recaptcha" data-sitekey="<?php echo $field['config']['public_key']; ?>" <?php if (!empty($field['config']['invis']) && $field['config']['invis'] === 1 ) { ?>data-size="invisible" <?php } ?>></div>
 <?php } ?>
 
+<script>
+	if(!window.cf_anti_loading_recaptcha) {
+		window.cf_anti_loading_recaptcha = true;
+		jQuery('.cf_anti_capfld').html('');
+		jQuery('script[src="<?php echo $script_url ?>"]').remove();
+		jQuery('<script>').attr('src', "<?php echo $script_url ?>").appendTo('body');
+	}
+</script>
+
 <?php echo $field_caption; ?>
 
 <?php echo $field_after; ?>
@@ -47,6 +55,7 @@ wp_enqueue_script('cf-anti-spam-recapthca-lib', $script_url);
 	<script>
 
 		var cf_recaptcha_is_ready = function (){
+			window.cf_anti_loading_recaptcha = false;
 			jQuery(document).trigger("cf-anti-init-recaptcha");
 		}
 
@@ -55,7 +64,7 @@ wp_enqueue_script('cf-anti-spam-recapthca-lib', $script_url);
 			jQuery(document).on("cf-anti-init-recaptcha", function(){
 				function init_recaptcha_<?php echo $field_id; ?>(){
 
-					var captch = $('#cap<?php echo $field_id; ?>');
+					var captch = $('#cap<?php echo $field_id; ?>').addClass('cf_anti_capfld');
 					<?php if (!empty($field['config']['recapv']) && $field['config']['recapv'] === 1 ) { ?>
 						$('<input type="hidden" name="cf-recapv-token" id="cf-recapv-token" value="ready">').insertAfter(captch[0]);
 						grecaptcha.ready(function() {

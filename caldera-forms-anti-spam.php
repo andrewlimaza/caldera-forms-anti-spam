@@ -12,8 +12,6 @@ define( 'CF_ANTISPAM_PATH',  plugin_dir_path( __FILE__ ) );
 define( 'CF_ANTISPAM_URL',  plugin_dir_url( __FILE__ ) );
 define( 'CF_ANTISPAM_VER', '0.3' );
 
-
-
 add_action( 'caldera_forms_includes_complete', 'cf_antispam_init' );
 
 function cf_antispam_init(){
