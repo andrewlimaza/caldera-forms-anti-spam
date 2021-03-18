@@ -72,6 +72,7 @@ if (!empty($field['config']['recapv']) && $field['config']['recapv'] === 1 ) {
 					      	grecaptcha.execute("<?php echo trim( $field['config']['public_key'] ); ?>", {action: 'homepage'}).then(function(token) {								
 							//change token
 							if( token !== "" ){ $("#cf-recapv-token").val( token ); }
+						});
 					  	});
 					<?php } else { ?>
 
