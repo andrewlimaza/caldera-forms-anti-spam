@@ -1,4 +1,12 @@
-<?php echo $wrapper_before; ?>
+<?php
+/**
+ * Renders the field in the visitor-facing form
+ *
+ * @package caldera-forms-anti-spam
+ */
+
+echo $wrapper_before; ?>
+
 <?php echo empty( $field['config']['recapv'] ) ? $field_label : ''; ?>
 
 <?php
@@ -21,6 +29,7 @@ $script_url = "https://www.google.com/recaptcha/api.js?onload=cf_recaptcha_is_re
 if (!empty($field['config']['recapv']) && $field['config']['recapv'] === 1 ) {
 	$script_url = "https://www.google.com/recaptcha/api.js?onload=cf_recaptcha_is_ready&render=" . trim($field['config']['public_key']) . "&hl=" . $language;
 }
+// wp_enqueue_script('cf-anti-spam-recapthca-lib', $script_url);
 
 ?>
 
@@ -52,55 +61,45 @@ if (!empty($field['config']['recapv']) && $field['config']['recapv'] === 1 ) {
 	ob_start();
 ?>
 
-	<script>
+<script>
 
-		var cf_recaptcha_is_ready = function (){
-			window.cf_anti_loading_recaptcha = false;
-			jQuery(document).trigger("cf-anti-init-recaptcha");
-		}
+	var cf_recaptcha_is_ready = function (){
+		window.cf_anti_loading_recaptcha = false;
+		jQuery(document).trigger("cf-anti-init-recaptcha");
+	}
 
-		jQuery( function($){
+	jQuery( function($){
+        function init_recaptcha_<?php echo $field_id; ?>(){
 
-			jQuery(document).on("cf-anti-init-recaptcha", function(){
-				function init_recaptcha_<?php echo $field_id; ?>(){
+            var captch = jQuery('#cap<?php echo $field_id; ?>').addClass('cf_anti_capfld');
+            <?php if (!empty($field['config']['recapv']) && $field['config']['recapv'] === 1 ) { ?>
+            grecaptcha.ready(function() {
+                var captch = jQuery('#cap<?php echo $field_id; ?>');
+                grecaptcha.execute("<?php echo trim( $field['config']['public_key'] ); ?>", {action: 'homepage'}).then(function(token) {
+					if( token !== "" ){ $("#cf-recapv-token").val( token ); }
+                });
+            });
+            <?php } else { ?>
 
-					var captch = $('#cap<?php echo $field_id; ?>').addClass('cf_anti_capfld');
-					<?php if (!empty($field['config']['recapv']) && $field['config']['recapv'] === 1 ) { ?>
-						$('<input type="hidden" name="cf-recapv-token" id="cf-recapv-token" value="ready">').insertAfter(captch[0]);
-						grecaptcha.ready(function() {
-							var captch = $('#cap<?php echo $field_id; ?>');
-					      	grecaptcha.execute("<?php echo trim( $field['config']['public_key'] ); ?>", {action: 'homepage'}).then(function(token) {								
-							//change token
-							if( token !== "" ){ $("#cf-recapv-token").val( token ); }
-					  	});
-					<?php } else { ?>
-
-						captch.empty();
+            captch.empty();
 
 
-						grecaptcha.render( captch[0], { "sitekey" : "<?php echo trim( $field['config']['public_key'] ); ?>", "theme" : "<?php echo isset( $field['config']['theme'] ) ? $field['config']['theme'] : "light"; ?>" } );
+            grecaptcha.render( captch[0], { "sitekey" : "<?php echo trim( $field['config']['public_key'] ); ?>", "theme" : "<?php echo isset( $field['config']['theme'] ) ? $field['config']['theme'] : "light"; ?>" } );
 
-						// Only load grecaptcha.execute if it's set to invisible mode.
-						<?php if ( !empty( $field['config']['invis']) && $field['config']['invis'] === 1 ) { ?> grecaptcha.execute(); <?php } ?>
-					<?php } ?>
-				}
+            // Only load grecaptcha.execute if it's set to invisible mode.
+            <?php if ( !empty( $field['config']['invis']) && $field['config']['invis'] === 1 ) { ?> grecaptcha.execute(); <?php } ?>
+            <?php } ?>
+        }
 
-				jQuery(document).on('click', '.reset_<?php echo $field_id; ?>', function(e){
-					e.preventDefault();
-					init_recaptcha_<?php echo $field_id; ?>();
-				});
-
-				//refresh it every 2 minutes.
-				setInterval(function () { init_recaptcha_<?php echo $field_id; ?>(); }, 2 * 60 * 1000);
-				
-				init_recaptcha_<?php echo $field_id; ?>();
-			});
+		jQuery(document).on("cf-anti-init-recaptcha", function(){
+			setTimeout( init_recaptcha_<?php echo $field_id; ?>(), 1000 );
 		});
+	});
 
-	</script>
+</script>
 
-	<?php
+<?php
 
-		$script_template = ob_get_clean();
+	$script_template = ob_get_clean();
 
-		Caldera_Forms_Render_Util::add_inline_data( $script_template, $form );
+	Caldera_Forms_Render_Util::add_inline_data( $script_template, $form );

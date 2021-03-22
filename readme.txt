@@ -52,7 +52,7 @@ Once the hidden field is added to your Caldera Form, select the V3 checkbox. (Yo
 == Changelog ==
 
 = 0.4 - 2021-01-19 =
-* BUG FIX: Fixed an issue where reCAPTCHA wasn't initialized correctly.
+* BUG FIX: Fixed an issue where reCAPTCHA wasn't initialized correctly - fixes issues on WordPress 5.5+. Thanks @jarryd-long
 
 = 0.3 =
 * Fixed JavaScript syntax issues within the V3 reCAPTCHA handler
@@ -72,6 +72,9 @@ Once the hidden field is added to your Caldera Form, select the V3 checkbox. (Yo
 * First release
 
 == Upgrade Notice ==
+
+= 0.4 =
+* Please upgrade to get compatibility changes for WordPress 5.5+
 
 = 0.2 =
 * Please upgrade to support V3 recaptcha and more.
