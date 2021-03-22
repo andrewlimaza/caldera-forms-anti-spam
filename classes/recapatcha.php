@@ -107,6 +107,12 @@ class CF_Antispam_Recapatcha {
 	 */
 	public function handler( $value, $field, $form ){
 
+		//JS didn't load to generate a token for the recaptcha. Let the form submit without error.
+		if( $_POST[ 'g-recaptcha-response' ] === 'ready' ){
+			//Workaround for JS issues in Caldera. We know JS has loaded, but reCAPTCHA faile.
+			return true;	
+		}
+
 		/**
 		 * Check if this is V3, then we grab the dynamically generated field value
 		*/

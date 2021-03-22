@@ -3,8 +3,8 @@ Contributors: andrewza, yoohooplugins, travislima
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4GC4JEZH7KSKL
 Tags: caldera forms, anti-spam, recaptcha
 Requires at least: 4.5
-Tested up to: 5.2.2
-Stable tag: trunk
+Tested up to: 5.6
+Stable tag: 0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -51,6 +51,13 @@ Once the hidden field is added to your Caldera Form, select the V3 checkbox. (Yo
 
 == Changelog ==
 
+= 0.4 - 2021-01-19 =
+* BUG FIX: Fixed an issue where reCAPTCHA wasn't initialized correctly - fixes issues on WordPress 5.5+. Thanks @jarryd-long
+
+= 0.3 =
+* Fixed JavaScript syntax issues within the V3 reCAPTCHA handler
+* Fixed bug where V2 reCAPTCHA field would still be rendered when V3 is enabled
+
 = 0.2 =
 * Added invisible reCAPTCHA support and option
 * Added reCAPTCHA v3 support and option
@@ -65,6 +72,9 @@ Once the hidden field is added to your Caldera Form, select the V3 checkbox. (Yo
 * First release
 
 == Upgrade Notice ==
+
+= 0.4 =
+* Please upgrade to get compatibility changes for WordPress 5.5+
 
 = 0.2 =
 * Please upgrade to support V3 recaptcha and more.
