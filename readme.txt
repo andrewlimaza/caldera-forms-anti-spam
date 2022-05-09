@@ -1,3 +1,5 @@
+** THIS IS NO LONGER SUPPORTED AS CALDERA FORMS NO LONGER IS SUPPORTED - I HIGHLY RECOMMEND SWITCHING FORM WORDPRESS PLUGINS IF YOU WANT A RECAPTCHA SOLUTION **
+
 === Caldera Forms Anti Spam ===
 Contributors: andrewza, yoohooplugins, travislima
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4GC4JEZH7KSKL
